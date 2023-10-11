@@ -6,7 +6,7 @@ header {
 
 a {
     color: #af1313;
-    padding: 0 2rem 0 2rem;
+    padding: 0 2rem;
 }
 
 a:hover {
@@ -15,9 +15,9 @@ a:hover {
     opacity: .9;
 }
 
-.container nav {
+.container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 span {

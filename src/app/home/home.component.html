@@ -1,1 +1,8 @@
-<p>todo</p>
+<div class="container">
+    <ul>
+        <li *ngFor="let toDo of toDos">
+            <p>{{toDo.user}}</p>
+            <p>{{toDo.todo}}</p>
+        </li>
+    </ul>
+</div>

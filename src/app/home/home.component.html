@@ -7,7 +7,7 @@
         <mat-card-title>{{toDo.todo}}</mat-card-title>
         <div>
             <button mat-button>Edit</button>
-            <button mat-button>Delete</button>
+            <button mat-button (click)="deleteToDo(toDo.id)">Delete</button>
         </div>
     </mat-card>
 </div>

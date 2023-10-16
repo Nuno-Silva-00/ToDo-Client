@@ -10,10 +10,16 @@ import { ToDoService } from '../services/toDo/to-do.service';
 
 export class HomeComponent {
   toDos!: ToDo[];
+
   constructor(private toDoService: ToDoService) { }
+
+
   ngOnInit() {
     this.toDos = this.toDoService.getAll();
-    console.log(this.toDos);
+  }
 
+  deleteToDo(id: number): void {
+    this.toDoService.deleteToDo(id);
+    this.toDos = this.toDoService.getAll()
   }
 }

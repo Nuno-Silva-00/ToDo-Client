@@ -7,14 +7,13 @@ import { ToDoService } from '../services/toDo/to-do.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent {
   toDos!: ToDo[];
-  constructor(private toDoService: ToDoService){
-
-  }
-  ngOnInit(){
-    this.toDos= this.toDoService.getAll();
+  constructor(private toDoService: ToDoService) { }
+  ngOnInit() {
+    this.toDos = this.toDoService.getAll();
     console.log(this.toDos);
-    
+
   }
 }

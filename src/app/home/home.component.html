@@ -1,8 +1,13 @@
 <div class="container">
-    <ul>
-        <li *ngFor="let toDo of toDos">
-            <p>{{toDo.user}}</p>
-            <p>{{toDo.todo}}</p>
-        </li>
-    </ul>
+    <!-- ADD The Input for creating a new todo point -->
+    <!-- <app-todoForm></app-todoForm> -->
+
+
+    <mat-card *ngFor="let toDo of toDos">
+        <mat-card-title>{{toDo.todo}}</mat-card-title>
+        <div>
+            <button mat-button>Edit</button>
+            <button mat-button>Delete</button>
+        </div>
+    </mat-card>
 </div>

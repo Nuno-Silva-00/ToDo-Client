@@ -8,6 +8,9 @@ import { HeaderComponent } from './header/header.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { NotesComponent } from './notes/notes.component';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

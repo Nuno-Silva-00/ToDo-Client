@@ -1,5 +1,3 @@
 export class ToDo {
-    id!: number;
-    todo!: string;
-    user!: string;
+    constructor(public id: number, public todo: string, public user: string) { }
 }

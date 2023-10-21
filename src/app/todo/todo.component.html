@@ -1,12 +1,12 @@
 <div class="container">
     <!-- ADD The Input for creating a new todo point -->
     <!-- <app-todoForm></app-todoForm> -->
+    <app-todo-edit></app-todo-edit>
 
-
-    <mat-card *ngFor="let toDo of toDos">
+    <mat-card *ngFor="let toDo of toDos; let i = index">
         <mat-card-title>{{toDo.todo}}</mat-card-title>
         <div>
-            <button mat-button>Edit</button>
+            <button mat-button (click)="onEditToDo(toDo.id)">Edit</button>
             <button mat-button (click)="deleteToDo(toDo.id)">Delete</button>
         </div>
     </mat-card>

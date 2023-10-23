@@ -31,6 +31,8 @@ export class ToDoComponent {
     this.toDoService.deleteToDo(id);
   }
 
-  onEditToDo(id: number): void { }
+  onEditToDo(id: number): void {
+    this.toDoService.startedEditing.next(id);
+  }
 
 }

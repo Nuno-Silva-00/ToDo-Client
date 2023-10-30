@@ -15,6 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { NotesComponent } from './notes/notes.component';
 import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
     HeaderComponent,
     ShoppingListComponent,
     NotesComponent,
-    TodoEditComponent
+    TodoEditComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,

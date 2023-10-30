@@ -3,6 +3,7 @@
     <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form-group">
         <mat-label>Add To Do</mat-label>
         <input type="text" id="toDo" name='toDo' matInput class="form-control" ngModel required>
+        <button matSuffix mat-button [hidden]="editMode ? false : true" (onClick)=resetForm()>Clear</button>
         <button matSuffix mat-button [disabled]="!f.valid" type="submit">
             {{editMode ? 'Edit' : 'Add'}}
         </button>

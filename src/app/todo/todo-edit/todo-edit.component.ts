@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ToDoService } from 'src/app/services/toDo/to-do.service';
@@ -15,6 +15,7 @@ export class TodoEditComponent {
   @ViewChild('f') toDoForm!: NgForm;
   subscription!: Subscription;
   editMode = false;
+  @Output() blockDelete = new EventEmitter<boolean>();
   editItemId!: number;
   editedToDo!: ToDo;
 
@@ -35,12 +36,14 @@ export class TodoEditComponent {
   resetForm() {
     this.toDoForm.resetForm();
     this.editMode = false;
+    this.blockDelete.emit(false);
   }
 
   ngOnInit() {
     this.subscription = this.toDoService.startedEditing.subscribe((id: number) => {
       this.editItemId = id;
       this.editMode = true;
+      this.blockDelete.emit(true);
       this.editedToDo = this.toDoService.getToDo(id);
       this.toDoForm.setValue({
         toDo: this.editedToDo.toDo

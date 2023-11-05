@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class ToDoComponent {
   toDos!: ToDo[];
   private subscription!: Subscription;
+  editMode = false;
 
   constructor(private toDoService: ToDoService) { }
 
@@ -33,6 +34,10 @@ export class ToDoComponent {
 
   onEditToDo(id: number): void {
     this.toDoService.startedEditing.next(id);
+  }
+
+  onBlockDelete(block: boolean) {
+    this.editMode = block;
   }
 
 }

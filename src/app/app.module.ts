@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ToDoComponent } from './todo/todo.component';
@@ -15,7 +16,8 @@ import { HeaderComponent } from './header/header.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { NotesComponent } from './notes/notes.component';
 import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { AuthPageComponent } from './auth-page/auth-page.component';
+import { LoadingSpinerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
     ShoppingListComponent,
     NotesComponent,
     TodoEditComponent,
-    LoginPageComponent
+    AuthPageComponent,
+    LoadingSpinerComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

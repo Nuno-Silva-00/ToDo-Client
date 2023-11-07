@@ -13,10 +13,10 @@ export class ToDoService {
   private toDo: ToDo[] = [
     { id: 1, user: 'ze', toDo: 'fazer comida' },
     { id: 2, user: 'kika', toDo: 'trabalhar na faculdade!' },
-    { id: 3, user: 'rafa', toDo: 'comprar mota.' }
+    { id: 3, user: 'rafa', toDo: 'comprar mota.' },
+    { id: 4, user: 'app', toDo: 'fix toDo validation params' }
   ]
 
-  // Create Fake Todos
   getAll(): ToDo[] {
     return this.toDo.slice();
   }

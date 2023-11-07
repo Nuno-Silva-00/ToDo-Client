@@ -1,5 +1,5 @@
 <!-- still need to double check the form validation -->
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form-group">
         <mat-label>Add To Do</mat-label>
         <input type="text" id="toDo" name='toDo' matInput class="form-control" ngModel required>

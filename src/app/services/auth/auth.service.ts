@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
-interface AuthResponseData {
+export interface AuthResponseData {
   accessToken: string
 }
 
@@ -21,7 +21,7 @@ export class AuthService {
         email,
         password
       }
-    );
+    ).pipe(catchError(this.handleError));
   }
 
   login(email: string, password: string) {
@@ -31,6 +31,26 @@ export class AuthService {
         email,
         password
       }
-    );
+    ).pipe(catchError(this.handleError));
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An unknown error ocurred';
+    if (!errorRes.error || !errorRes.error.message) {
+      return throwError(() => errorMessage);
+    }
+
+    switch (errorRes.error.message) {
+      case 'EMAIL_NOT_FOUND':
+        errorMessage = 'Email not Found!';
+        break;
+      case 'WRONG_PASSWORD':
+        errorMessage = 'Wrong Password!';
+        break;
+      case 'EMAIL_EXISTS':
+        errorMessage = 'This Email already exists!';
+        break;
+    }
+    return throwError(() => errorMessage);
   }
 }

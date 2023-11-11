@@ -5,9 +5,9 @@
     <app-loading-spinner></app-loading-spinner>
 </div>
 <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
-    <div class="form">
+    <div class="form" [hidden]="isLoginMode">
         <label for="name">Name</label>
-        <input type="text" id="name" ngModel name="name" required>
+        <input type="text" id="name" ngModel name="name" [required]="!isLoginMode">
     </div>
     <div class="form">
         <label for="email">Email</label>

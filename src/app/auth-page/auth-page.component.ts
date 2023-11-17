@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { AuthResponseData, AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -50,8 +50,6 @@ export class AuthPageComponent {
       }
     });
 
-
     form.reset();
   }
-
 }

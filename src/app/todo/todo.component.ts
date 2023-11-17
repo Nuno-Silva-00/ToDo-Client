@@ -10,18 +10,27 @@ import { Subscription } from 'rxjs';
 })
 
 export class ToDoComponent {
-  toDos!: ToDo[];
+  toDos: ToDo[] = [];
   private subscription!: Subscription;
+
   editMode = false;
 
   constructor(private toDoService: ToDoService) { }
 
 
   ngOnInit() {
-    this.toDos = this.toDoService.getAll();
-    this.subscription = this.toDoService.toDoChanged.subscribe((toDos: ToDo[]) => {
-      this.toDos = toDos;
-    })
+    this.subscription = this.toDoService.getAll()
+      .subscribe((toDos: ToDo[]) => {
+        this.toDos = toDos;
+      })
+    console.log(this.toDos);
+
+
+    this.subscription.add(
+      this.toDoService.toDoChanged.subscribe((toDos: ToDo[]) => {
+        this.toDos = toDos;
+      }));
+
   }
 
   ngOnDestroy() {

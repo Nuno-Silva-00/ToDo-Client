@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ToDoComponent } from './todo/todo.component';
@@ -18,6 +18,7 @@ import { NotesComponent } from './notes/notes.component';
 import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
 import { AuthPageComponent } from './auth-page/auth-page.component';
 import { LoadingSpinerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { LoadingSpinerComponent } from './shared/loading-spinner/loading-spinner
     MatIconModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

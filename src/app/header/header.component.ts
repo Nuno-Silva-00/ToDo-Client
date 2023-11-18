@@ -23,4 +23,8 @@ export class HeaderComponent {
     this.userSub.unsubscribe();
   }
 
+  onLogout() {
+    this.authService.logout();
+  }
+
 }

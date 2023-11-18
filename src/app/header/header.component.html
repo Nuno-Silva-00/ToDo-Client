@@ -8,6 +8,6 @@
             <a routerLink="/notes">Notes</a>
         </nav>
         <a routerLink="/auth" *ngIf="!isAuthenticated">Login</a>
-        <button routerLink="/" *ngIf="isAuthenticated">Logout</button>
+        <a *ngIf="isAuthenticated" (click)="onLogout()">Logout</a>
     </div>
 </header>

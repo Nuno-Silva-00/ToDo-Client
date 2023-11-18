@@ -22,9 +22,7 @@ export class ToDoComponent {
     this.subscription = this.toDoService.getAll()
       .subscribe((toDos: ToDo[]) => {
         this.toDos = toDos;
-      })
-    console.log(this.toDos);
-
+      });
 
     this.subscription.add(
       this.toDoService.toDoChanged.subscribe((toDos: ToDo[]) => {

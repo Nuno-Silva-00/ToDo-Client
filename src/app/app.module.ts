@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { ToDoComponent } from './todo/todo.component';
@@ -19,7 +20,6 @@ import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
 import { AuthPageComponent } from './auth-page/auth-page.component';
 import { LoadingSpinerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +41,10 @@ import { AuthInterceptorService } from './services/auth/auth-interceptor.service
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule,
+    ReactiveFormsModule,
+
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

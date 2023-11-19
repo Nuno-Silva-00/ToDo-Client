@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { FormControl, NgForm, Validators, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 
 import { AuthResponseData, AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -14,21 +19,34 @@ export class AuthPageComponent {
   isLoginMode = true;
   isLoading = false;
   error: string = '';
+  hide = true;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  userForm = new FormGroup({
+    name: this.isLoginMode ? new FormControl('') : new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)])
+  });
+
+  constructor(private authService: AuthService, private router: Router, private topMessage: MatSnackBar) { }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
-  onSubmit(form: NgForm) {
-    if (!form.valid) {
+  onSubmit() {
+
+    if (!this.userForm.valid) {
       return;
     }
 
-    const name = form.value.name;
-    const email = form.value.email;
-    const password = form.value.password;
+    const name = this.userForm.get('name')!.value;
+    const email = this.userForm.get('email')!.value;
+    const password = this.userForm.get('password')!.value;
+
+    if (email === null || password === null || name === null) {
+      return;
+    }
+
     this.isLoading = true;
 
     let authObs: Observable<AuthResponseData>
@@ -47,9 +65,18 @@ export class AuthPageComponent {
       error: (errorMessage) => {
         this.isLoading = false;
         this.error = errorMessage;
+        this.openTopMessage();
       }
     });
 
-    form.reset();
+    this.userForm.reset();
+  }
+
+  openTopMessage() {
+    this.topMessage.open(this.error, 'Hide', {
+      duration: 3 * 1000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 }

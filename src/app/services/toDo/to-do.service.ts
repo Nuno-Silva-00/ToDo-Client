@@ -1,9 +1,10 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, exhaustMap, take } from 'rxjs';
+import { Subject, Subscription, exhaustMap, take, tap } from 'rxjs';
 import { ToDo } from 'src/app/shared/models/ToDo';
 import { AuthService } from '../auth/auth.service';
+import { User } from '../auth/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,30 +17,32 @@ export class ToDoService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  private toDo: ToDo[] = [
-    { id: 1, toDo: 'fazer comida' },
-    { id: 2, toDo: 'trabalhar na faculdade!' },
-    { id: 3, toDo: 'comprar mota.' },
-    { id: 4, toDo: 'fix toDo validation params' }
-  ]
+  private toDo: ToDo[] = []
 
   getAll() {
-    return this.http.get<ToDo[]>(this.path);
+    return this.http.get<ToDo[]>(this.path).pipe(tap((resData: ToDo[]) => {
+      this.toDo = resData
+    }));
   }
 
   getToDo(id: number): ToDo {
     return this.toDo.filter(item => item.id === id)[0] || null;
   }
 
-  addToDo(newToDo: string, user: string): void {
-    let newId: number = this.toDo.length + 1; //alterar depois para contemplar o Id returnado pelo servidor
-    this.toDo.push({ id: newId, toDo: newToDo });
-    this.toDoChanged.next(this.toDo.slice());
+  addToDo(newToDo: string): void {
+    this.http.post<ToDo>(this.path + '/create', {
+      todo: newToDo
+    }).subscribe(response => {
+      this.toDo.push(response);
+      this.toDoChanged.next(this.toDo.slice());
+    });
   }
 
   deleteToDo(id: number): void {
-    this.toDo = this.toDo.filter(item => item.id != id);
-    this.toDoChanged.next(this.toDo.slice());
+    this.http.delete(this.path + '/delete/' + id).subscribe(() => {
+      this.toDo = this.toDo.filter(item => item.id !== id);
+      this.toDoChanged.next(this.toDo.slice());
+    });
   }
 
   updateToDo(id: number, newToDo: string) {
@@ -48,25 +51,23 @@ export class ToDoService {
     this.toDoChanged.next(this.toDo.slice());
   }
 
+  // private handleError(errorRes: HttpErrorResponse) {
+  //   let errorMessage = 'An unknown error ocurred';
+  //   if (!errorRes.error || !errorRes.error.message) {
+  //     return throwError(() => errorMessage);
+  //   }
 
-
-  // fetchToDo() {
-
-  //   return this.authService.user.pipe(take(1), exhaustMap(user => {
-  //     return this.http
-  //       .get<ToDo[]>(this.path)
-  //   }),
-  //   );
-
-  //   //  .subscribe(res => console.log(res));
-  //   // .pipe(
-  //   //   map(toDos => {
-  //   //     return toDos.map(toDo => {
-  //   //       return {
-  //   //         toDo
-  //   //       }
-  //   //     })
-  //   //   })
-  //   // )
+  //   switch (errorRes.error.message) {
+  //     case 'EMAIL_NOT_FOUND':
+  //       errorMessage = 'Email not Found!';
+  //       break;
+  //     case 'WRONG_PASSWORD':
+  //       errorMessage = 'Wrong Password!';
+  //       break;
+  //     case 'EMAIL_EXISTS':
+  //       errorMessage = 'This Email already exists!';
+  //       break;
+  //   }
+  //   return throwError(() => errorMessage);
   // }
 }

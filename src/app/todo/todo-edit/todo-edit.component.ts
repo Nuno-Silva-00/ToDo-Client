@@ -27,7 +27,7 @@ export class TodoEditComponent {
     if (this.editMode) {
       this.toDoService.updateToDo(this.editItemId, value.toDo);
     } else {
-      this.toDoService.addToDo(value.toDo, 'ze');
+      this.toDoService.addToDo(value.toDo);
     }
 
     this.resetForm();

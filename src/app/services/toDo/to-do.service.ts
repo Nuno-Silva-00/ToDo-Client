@@ -32,42 +32,50 @@ export class ToDoService {
   addToDo(newToDo: string): void {
     this.http.post<ToDo>(this.path + '/create', {
       todo: newToDo
-    }).subscribe(response => {
-      this.toDo.push(response);
-      this.toDoChanged.next(this.toDo.slice());
-    });
+    }).subscribe(
+      {
+        next: (response) => {
+          this.toDo.push(response);
+          this.toDoChanged.next(this.toDo.slice());
+        },
+        error: (e) => {
+          console.log('An Error occurred ', e.message);
+        },
+        complete: () => { console.info('To Do Created'); }
+      }
+    );
   }
 
   deleteToDo(id: number): void {
-    this.http.delete(this.path + '/delete/' + id).subscribe(() => {
-      this.toDo = this.toDo.filter(item => item.id !== id);
-      this.toDoChanged.next(this.toDo.slice());
-    });
+    this.http.delete(this.path + '/delete/' + id).subscribe(
+      {
+        next: (response) => {
+          const index = this.toDo.findIndex(todo => todo.id === id);
+          this.toDo.splice(index, 1);
+          this.toDoChanged.next(this.toDo.slice());
+        },
+        error: (e) => {
+          console.log('An Error occurred ', e.message);
+        },
+        complete: () => console.info('To Do Deleted')
+      }
+    );
+
   }
 
-  updateToDo(id: number, newToDo: string) {
-    const Index = this.toDo.findIndex(item => item.id === id);
-    this.toDo[Index] = { ...this.toDo[Index], toDo: newToDo };
-    this.toDoChanged.next(this.toDo.slice());
+  async updateToDo(id: number, newToDo: string) {
+    this.http.patch(this.path + '/update', { id: id, toDo: newToDo }).subscribe(
+      {
+        next: (response) => {
+          const Index = this.toDo.findIndex(item => item.id === id);
+          this.toDo[Index] = { id: this.toDo[Index].id, toDo: newToDo };
+          this.toDoChanged.next(this.toDo.slice());
+        },
+        error: (e) => {
+          console.log('An Error occurred ', e.message);
+        },
+        complete: () => console.info('To Do Updated')
+      }
+    );
   }
-
-  // private handleError(errorRes: HttpErrorResponse) {
-  //   let errorMessage = 'An unknown error ocurred';
-  //   if (!errorRes.error || !errorRes.error.message) {
-  //     return throwError(() => errorMessage);
-  //   }
-
-  //   switch (errorRes.error.message) {
-  //     case 'EMAIL_NOT_FOUND':
-  //       errorMessage = 'Email not Found!';
-  //       break;
-  //     case 'WRONG_PASSWORD':
-  //       errorMessage = 'Wrong Password!';
-  //       break;
-  //     case 'EMAIL_EXISTS':
-  //       errorMessage = 'This Email already exists!';
-  //       break;
-  //   }
-  //   return throwError(() => errorMessage);
-  // }
 }

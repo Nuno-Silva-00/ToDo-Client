@@ -20,6 +20,7 @@ import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
 import { AuthPageComponent } from './auth-page/auth-page.component';
 import { LoadingSpinerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
+import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/shopping-list-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +30,8 @@ import { AuthInterceptorService } from './services/auth/auth-interceptor.service
     NotesComponent,
     TodoEditComponent,
     AuthPageComponent,
-    LoadingSpinerComponent
+    LoadingSpinerComponent,
+    ShoppingListEditComponent
   ],
   imports: [
     BrowserModule,

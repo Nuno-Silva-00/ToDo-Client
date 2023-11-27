@@ -1,0 +1,82 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Subject, tap } from 'rxjs';
+
+import { ShoppingListItem } from 'src/app/shared/models/ShoppingListItem';
+import { AuthService } from '../auth/auth.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ShoppingListService {
+
+  shoppingListChanged = new Subject<ShoppingListItem[]>();
+  startedEditing = new Subject<number>();
+  path = 'http://localhost:3000/api/shopping';
+
+  constructor(private http: HttpClient, private authService: AuthService) { }
+
+  private shoppingList: ShoppingListItem[] = [];
+
+  getToDo(id: number): ShoppingListItem {
+    return this.shoppingList.filter(item => item.id === id)[0] || null;
+  }
+
+  getAll() {
+    return this.http.get<ShoppingListItem[]>(this.path).pipe(tap((resData: ShoppingListItem[]) => {
+      this.shoppingList = resData;
+    }));
+  }
+
+  addToDo(item: string, amount: number, unit: string): void {
+    this.http.post<ShoppingListItem>(this.path + '/create', {
+      item,
+      amount,
+      unit
+    }).subscribe(
+      {
+        next: (response) => {
+          this.shoppingList.push(response);
+          this.shoppingListChanged.next(this.shoppingList.slice());
+        },
+        error: (e) => {
+          console.log('An Error occurred ', e.message);
+        },
+        complete: () => { console.info('Shopping List Item Created!'); }
+      }
+    );
+  }
+
+  deleteToDo(id: number): void {
+    this.http.delete(this.path + '/delete/' + id).subscribe(
+      {
+        next: (response) => {
+          const index = this.shoppingList.findIndex(item => item.id === id);
+          this.shoppingList.splice(index, 1);
+          this.shoppingListChanged.next(this.shoppingList.slice());
+        },
+        error: (e) => {
+          console.log('An Error occurred ', e.message);
+        },
+        complete: () => { console.info('To Do Deleted'); }
+      }
+    );
+
+  }
+
+  async updateToDo(id: number, item: string, amount: number, unit: string) {
+    this.http.patch(this.path + '/update', { id: id, item, amount, unit }).subscribe(
+      {
+        next: (response) => {
+          const Index = this.shoppingList.findIndex(item => item.id === id);
+          this.shoppingList[Index] = { id: this.shoppingList[Index].id, item, amount, unit };
+          this.shoppingListChanged.next(this.shoppingList.slice());
+        },
+        error: (e) => {
+          console.log('An Error occurred ', e.message);
+        },
+        complete: () => { console.info('To Do Updated'); }
+      }
+    );
+  }
+}

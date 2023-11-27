@@ -17,16 +17,16 @@ export class ToDoService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  private toDo: ToDo[] = []
-
-  getAll() {
-    return this.http.get<ToDo[]>(this.path).pipe(tap((resData: ToDo[]) => {
-      this.toDo = resData
-    }));
-  }
+  private toDo: ToDo[] = [];
 
   getToDo(id: number): ToDo {
     return this.toDo.filter(item => item.id === id)[0] || null;
+  }
+
+  getAll() {
+    return this.http.get<ToDo[]>(this.path).pipe(tap((resData: ToDo[]) => {
+      this.toDo = resData;
+    }));
   }
 
   addToDo(newToDo: string): void {
@@ -41,7 +41,7 @@ export class ToDoService {
         error: (e) => {
           console.log('An Error occurred ', e.message);
         },
-        complete: () => { console.info('To Do Created'); }
+        complete: () => { console.info('To Do Created!'); }
       }
     );
   }
@@ -57,7 +57,7 @@ export class ToDoService {
         error: (e) => {
           console.log('An Error occurred ', e.message);
         },
-        complete: () => console.info('To Do Deleted')
+        complete: () => { console.info('To Do Deleted!'); }
       }
     );
 
@@ -74,7 +74,7 @@ export class ToDoService {
         error: (e) => {
           console.log('An Error occurred ', e.message);
         },
-        complete: () => console.info('To Do Updated')
+        complete: () => { console.info('To Do Updated!'); }
       }
     );
   }

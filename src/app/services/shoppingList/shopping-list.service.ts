@@ -28,14 +28,15 @@ export class ShoppingListService {
     }));
   }
 
-  addToDo(item: string, amount: number, unit: string): void {
+  addItem(item: string, amount: number): void {
     this.http.post<ShoppingListItem>(this.path + '/create', {
       item,
-      amount,
-      unit
+      amount
     }).subscribe(
       {
         next: (response) => {
+          console.log(response);
+
           this.shoppingList.push(response);
           this.shoppingListChanged.next(this.shoppingList.slice());
         },
@@ -47,7 +48,7 @@ export class ShoppingListService {
     );
   }
 
-  deleteToDo(id: number): void {
+  deleteItem(id: number): void {
     this.http.delete(this.path + '/delete/' + id).subscribe(
       {
         next: (response) => {
@@ -64,12 +65,12 @@ export class ShoppingListService {
 
   }
 
-  async updateToDo(id: number, item: string, amount: number, unit: string) {
-    this.http.patch(this.path + '/update', { id: id, item, amount, unit }).subscribe(
+  updateItem(id: number, item: string, amount: number,) {
+    this.http.patch(this.path + '/update', { id, item, amount }).subscribe(
       {
         next: (response) => {
           const Index = this.shoppingList.findIndex(item => item.id === id);
-          this.shoppingList[Index] = { id: this.shoppingList[Index].id, item, amount, unit };
+          this.shoppingList[Index] = { id: this.shoppingList[Index].id, item, amount };
           this.shoppingListChanged.next(this.shoppingList.slice());
         },
         error: (e) => {

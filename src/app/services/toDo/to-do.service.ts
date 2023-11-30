@@ -63,7 +63,7 @@ export class ToDoService {
 
   }
 
-  async updateToDo(id: number, newToDo: string) {
+  updateToDo(id: number, newToDo: string) {
     this.http.patch(this.path + '/update', { id: id, toDo: newToDo }).subscribe(
       {
         next: (response) => {

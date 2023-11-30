@@ -11,7 +11,6 @@ import { ToDo } from 'src/app/shared/models/ToDo';
   styleUrls: ['./todo-edit.component.css']
 })
 export class TodoEditComponent {
-  //still need to double check the form validation
   @ViewChild('f') toDoForm!: NgForm;
   subscription!: Subscription;
   editMode = false;
@@ -35,6 +34,15 @@ export class TodoEditComponent {
 
   resetForm() {
     this.toDoForm.resetForm();
+
+    const inputElement = document.getElementById('toDo');
+    if (inputElement) {
+      inputElement.blur();
+    }
+
+    this.toDoForm.form.markAsPristine();
+    this.toDoForm.form.markAsUntouched();
+
     this.editMode = false;
     this.blockDelete.emit(false);
   }

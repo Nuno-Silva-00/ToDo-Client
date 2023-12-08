@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ToDo } from '../shared/models/ToDo';
 import { ToDoService } from '../services/toDo/to-do.service';
 import { Subscription } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-todo',
@@ -31,8 +32,9 @@ export class ToDoComponent {
 
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.toDos, event.previousIndex, event.currentIndex);
+    this.toDoService.changeOrder(this.toDos);
   }
 
   deleteToDo(id: number): void {
@@ -46,5 +48,9 @@ export class ToDoComponent {
   onBlockDelete(block: boolean) {
     this.editMode = block;
   }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
 }

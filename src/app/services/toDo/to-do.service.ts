@@ -1,10 +1,11 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, Subscription, exhaustMap, take, tap } from 'rxjs';
-import { ToDo } from 'src/app/shared/models/ToDo';
+import { Subject, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { User } from '../auth/user.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
+import { ToDo } from 'src/app/shared/models/ToDo';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,8 @@ export class ToDoService {
       {
         next: (response) => {
           const index = this.toDo.findIndex(todo => todo.id === id);
+
+          console.log(this.toDo[index]);
           this.toDo.splice(index, 1);
           this.toDoChanged.next(this.toDo.slice());
         },
@@ -75,6 +78,19 @@ export class ToDoService {
           console.log('An Error occurred ', e.message);
         },
         complete: () => { console.info('To Do Updated!'); }
+      }
+    );
+  }
+
+  changeOrder(newOrder: ToDo[]): void {
+    this.http.patch(this.path + '/updateOrder', { newOrder }).subscribe(
+      {
+        next: (response) => {
+        },
+        error: (e) => {
+          console.log('An Error occurred ', e.message);
+        },
+        complete: () => { console.info('Order Updated!'); }
       }
     );
   }

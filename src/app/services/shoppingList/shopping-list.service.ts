@@ -35,8 +35,6 @@ export class ShoppingListService {
     }).subscribe(
       {
         next: (response) => {
-          console.log(response);
-
           this.shoppingList.push(response);
           this.shoppingListChanged.next(this.shoppingList.slice());
         },

@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
 import { ToDoComponent } from './todo/todo.component';
@@ -46,6 +47,7 @@ import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/sh
     HttpClientModule,
     MatSnackBarModule,
     ReactiveFormsModule,
+    DragDropModule
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],

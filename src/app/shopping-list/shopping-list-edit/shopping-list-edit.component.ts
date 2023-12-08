@@ -18,17 +18,23 @@ export class ShoppingListEditComponent {
 
   shoppingListForm = new FormGroup({
     item: new FormControl('', Validators.required),
-    amount: new FormControl('', Validators.required)
+    amount: new FormControl('')
   });
 
   constructor(private shoppingListService: ShoppingListService) { }
 
   onSubmit() {
     const item = this.shoppingListForm.get('item')!.value;
-    const amount = this.shoppingListForm.get('amount')!.value;
+    let amount = this.shoppingListForm.get('amount')!.value;
+    console.log(amount);
 
-    if (item === null || amount === null) {
+
+    if (item === null) {
       return;
+    }
+
+    if (amount === null) {
+      amount = '0';
     }
 
     if (this.editMode) {

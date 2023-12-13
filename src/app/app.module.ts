@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { AuthPageComponent } from './auth-page/auth-page.component';
 import { LoadingSpinerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
 import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/shopping-list-edit.component';
+import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,8 @@ import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/sh
     TodoEditComponent,
     AuthPageComponent,
     LoadingSpinerComponent,
-    ShoppingListEditComponent
+    ShoppingListEditComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/sh
     HttpClientModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],

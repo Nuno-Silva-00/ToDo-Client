@@ -26,8 +26,6 @@ export class ShoppingListEditComponent {
   onSubmit() {
     const item = this.shoppingListForm.get('item')!.value;
     let amount = this.shoppingListForm.get('amount')!.value;
-    console.log(amount);
-
 
     if (item === null) {
       return;
@@ -49,19 +47,18 @@ export class ShoppingListEditComponent {
   resetForm() {
     this.shoppingListForm.reset();
 
-    this.shoppingListForm.markAsPristine();
-    this.shoppingListForm.markAsUntouched();
-
     this.editMode = false;
     this.blockDelete.emit(false);
   }
 
   ngOnInit() {
     this.subscription = this.shoppingListService.startedEditing.subscribe((id: number) => {
+
       this.editItemId = id;
       this.editMode = true;
       this.blockDelete.emit(true);
-      this.editedItem = this.shoppingListService.getToDo(id);
+      this.editedItem = this.shoppingListService.getItem(id);
+
       this.shoppingListForm.setValue({
         item: this.editedItem.item,
         amount: this.editedItem.amount.toString()

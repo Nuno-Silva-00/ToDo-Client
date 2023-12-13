@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { ShoppingListItem } from '../shared/models/ShoppingListItem';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+
+
+import { ShoppingListItem } from '../shared/models/ShoppingListItem';
 import { ShoppingListService } from '../services/shoppingList/shopping-list.service';
+import { DeleteDialogComponent } from '../shared/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,7 +18,7 @@ export class ShoppingListComponent {
 
   editMode = false;
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(private shoppingListService: ShoppingListService, private deleteMessage: MatDialog) { }
 
   ngOnInit() {
     this.subscription = this.shoppingListService.getAll()
@@ -33,7 +37,11 @@ export class ShoppingListComponent {
   }
 
   deleteToDo(id: number): void {
-    this.shoppingListService.deleteItem(id);
+    const dialogRef = this.deleteMessage.open(DeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      result && this.shoppingListService.deleteItem(id);
+    });
   }
 
   onEditToDo(id: number): void {

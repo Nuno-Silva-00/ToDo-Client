@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { ToDo } from '../shared/models/ToDo';
-import { ToDoService } from '../services/toDo/to-do.service';
 import { Subscription } from 'rxjs';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatDialog } from '@angular/material/dialog';
+
+import { ToDo } from '../shared/models/ToDo';
+import { ToDoService } from '../services/toDo/to-do.service';
+import { DeleteDialogComponent } from '../shared/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-todo',
@@ -16,7 +19,7 @@ export class ToDoComponent {
 
   editMode = false;
 
-  constructor(private toDoService: ToDoService) { }
+  constructor(private toDoService: ToDoService, private deleteMessage: MatDialog) { }
 
 
   ngOnInit() {
@@ -38,7 +41,11 @@ export class ToDoComponent {
   }
 
   deleteToDo(id: number): void {
-    this.toDoService.deleteToDo(id);
+    const dialogRef = this.deleteMessage.open(DeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      result && this.toDoService.deleteToDo(id);
+    });
   }
 
   onEditToDo(id: number): void {

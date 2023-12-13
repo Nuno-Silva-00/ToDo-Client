@@ -18,7 +18,7 @@ export class ShoppingListService {
 
   private shoppingList: ShoppingListItem[] = [];
 
-  getToDo(id: number): ShoppingListItem {
+  getItem(id: number): ShoppingListItem {
     return this.shoppingList.filter(item => item.id === id)[0] || null;
   }
 

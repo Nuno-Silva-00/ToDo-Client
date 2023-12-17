@@ -14,7 +14,7 @@ export class ToDoService {
 
   toDoChanged = new Subject<ToDo[]>();
   startedEditing = new Subject<number>();
-  path = environment.API+ '/api/todo';
+  path = environment.API + '/api/todo';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
